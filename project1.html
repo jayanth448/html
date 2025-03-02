@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Result Checker - GITAM</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+            background: linear-gradient(to right, #ff7e5f, #feb47b); /* Gradient Background */
+            color: white;
+        }
+        h1 {
+            font-size: 32px;
+            color: #fff;
+            background-color: #8b0000;
+            padding: 10px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: white;
+            color: black;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #8b0000;
+            color: white;
+        }
+        button {
+            background-color: #006400;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #004d00;
+        }
+    </style>
+</head>
+<body>
+    <h1>GITAM Student Result Checker</h1>
+    <br><br>
+    <label for="studentName">Enter Student Name:</label>
+    <input type="text" id="studentName">
+    <button onclick="searchResult()">Check Result</button>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Student Name</th>
+                <th>Subject</th>
+                <th>Marks</th>
+                <th>Result</th>
+            </tr>
+        </thead>
+        <tbody id="resultTable">
+            <!-- Results will be displayed here -->
+        </tbody>
+    </table>
+
+    <script>
+        let studentsData = [];
+        
+        function getRandomMarks() {
+            return Math.floor(Math.random() * 101); // Random marks between 0 and 100
+        }
+
+        function addResults() {
+            let students = ["Amit", "Bhavya", "Chirag", "Deepak", "Esha", "Farhan", "Gaurav", "Harsh", "Ishita", "Jatin", 
+                            "Kiran", "Lakshmi", "Meera", "Neha", "Omkar", "Priya", "Qasim", "Rohit", "Sanya", "Tarun", 
+                            "Uday", "Vikas", "Waqar", "Xavier", "Yash", "Zainab", "Arjun", "Bina", "Chetan", "Divya", 
+                            "Ekta", "Faizan", "Gopal", "Hemant", "Indira", "Jay", "Kavita", "Lalit", "Mohan", "Nisha", 
+                            "Omar", "Pooja", "Ramesh", "Simran", "Tanmay", "Uma", "Varun", "Waseem", "Xena", "Yuvraj", 
+                            "Zoya", "Ankit", "Bharti", "Chandan", "Disha", "Eklavya", "Falguni", "Ganesh", "Himani"];
+            let subject = "Python Programming";
+            
+            students.forEach(student => {
+                let marks = getRandomMarks();
+                let result = marks >= 25 ? "Pass" : "Fail";
+                studentsData.push({ name: student, subject: subject, marks: marks, result: result });
+            });
+        }
+
+        function searchResult() {
+            let name = document.getElementById("studentName").value.trim().toLowerCase();
+            let table = document.getElementById("resultTable");
+            table.innerHTML = "";
+            
+            let filteredStudents = studentsData.filter(student => student.name.toLowerCase() === name);
+            
+            if (filteredStudents.length > 0) {
+                filteredStudents.forEach(student => {
+                    let newRow = table.insertRow();
+                    newRow.innerHTML = `<td>${student.name}</td><td>${student.subject}</td><td>${student.marks}</td><td>${student.result}</td>`;
+                });
+            } else {
+                let newRow = table.insertRow();
+                newRow.innerHTML = `<td colspan="4">No student found</td>`;
+            }
+        }
+
+        window.onload = addResults;
+    </script>
+</body>
+</html>
